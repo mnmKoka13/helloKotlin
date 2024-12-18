@@ -14,4 +14,14 @@ fun main(args: Array<String>) {
     var drinks = listOf("mead", "wine", "LaCroix")
 
     var magicMirror = playerName.reversed()
+
+//    val numLetters = "Mississippi".count()
+//    println(numLetters)
+
+//    val numLetters = "Mississippi".count({ letter ->
+//        letter == 's'
+//    })
+
+    val numLetters = "Mississippi".count({ it == 's'})
+    println(numLetters)
 }
