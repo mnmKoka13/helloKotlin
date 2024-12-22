@@ -19,7 +19,9 @@ fun main(arg: Array<String>) {
 //    runSimulation("Guyal", greetingFunction)
 
     // 略記構文
-    runSimulation("Guyal") { playerName, numBuildings ->
+    // 第二引数：関数リファレンス
+    // 第三引数：ラムダ
+    runSimulation("Guyal", ::printConstructionCost) { playerName, numBuildings ->
         val currentYear = 2024
         println("Adding $numBuildings houses")
         "Welcome to SimVillage, $playerName!(copyright $currentYear)"
@@ -27,7 +29,15 @@ fun main(arg: Array<String>) {
 }
 
 // 関数を受け取る関数
-inline fun runSimulation(playerName: String, greetingFunction: (String, Int) -> String) {
+inline fun runSimulation(playerName: String,
+                         costPrinter: (Int) -> Unit,
+                         greetingFunction: (String, Int) -> String) {
     val numBuildings = (1..3).shuffled().last()
+    costPrinter(numBuildings)
     println(greetingFunction(playerName, numBuildings))
+}
+
+fun printConstructionCost(numBuildings: Int) {
+    val cost = 500
+    println("construction cost: ${cost * numBuildings}")
 }
