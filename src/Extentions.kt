@@ -21,8 +21,14 @@ fun <T> T.easyPrint(): T {
     return this
 }
 
+// null許容型のエクステンション
+infix fun String?.printWithDefault(default: String) = println(this ?: default)
+
 fun main(args: Array<String>) {
     "Madrigal has left the building".easyPrint().addEnthusiasm().easyPrint()
     42.easyPrint()
     "How many vowels?".numVowels.easyPrint()
+
+    null printWithDefault "Default string" // infix関数の呼び出し
+    null.printWithDefault("Default string") // 通常の関数呼び出し
 }
