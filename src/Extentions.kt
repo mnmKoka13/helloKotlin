@@ -1,3 +1,10 @@
+// 拡張プロパティ
+// 拡張プロパティにはバッキングフィールド（データを保存するフィールド）がないため、初期化できない。
+// 代わりにgetterを定義することで有効な拡張プロパティを定義できる。
+val String.numVowels
+    get() = count { "aeiouy".contains(it) }
+
+
 // addEnthusiasm関数の場合、レシーバ型としてStringを指定している。
 // thisキーワード：拡張関数が呼び出されたレシーバのインスタンスを参照する。（この場合、Stringのインスタンス）
 // 拡張関数：fun レシーバ型.関数名(引数) { 処理 }
@@ -17,4 +24,5 @@ fun <T> T.easyPrint(): T {
 fun main(args: Array<String>) {
     "Madrigal has left the building".easyPrint().addEnthusiasm().easyPrint()
     42.easyPrint()
+    "How many vowels?".numVowels.easyPrint()
 }
