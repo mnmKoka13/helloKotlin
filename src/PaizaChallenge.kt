@@ -1,25 +1,32 @@
 fun main(args: Array<String>) {
-    val (n, m) = readln().split(" ").map { it.toInt() } // n: 座席数　m: グループ数
-    var seats = MutableList(n) { 0 }
-    for (i in 1..m) {
-        val copiedSeats = seats.toList().toMutableList()
-        val (a, b) = readln().split(" ").map { it.toInt() } // a: 人数 b: 座席番号
-        var sitFlg = true
-        var nextSeat = b - 1
-        for (j in 0 until a) {
-            if (copiedSeats[nextSeat] == 1) {
-                sitFlg = false
-                break
-            }
-            copiedSeats[nextSeat] = 1
-            nextSeat = if (nextSeat + 1 >= n) 0 else nextSeat + 1
+    val (h, w, n) = readln().split(" ").map { it.toInt() }
+
+    val stamps: MutableList<MutableList<String>> = mutableListOf()
+    for (i in 1..n) {
+        val stamp = mutableListOf<String>()
+        for (j in 1..h) {
+            stamp.add(readln())
         }
-        if (sitFlg) {
-            seats = copiedSeats
-        }
+        stamps.add(stamp)
     }
-    val result = seats.sum()
-    println(result)
+
+    val (r, c) = readln().split(" ").map { it.toInt() }
+    for(i in 1..r) {
+        val stampIndexes = readln().split(" ").map { it.toInt() - 1 }
+        val lines: Array<String> = Array(h) { "" }
+
+        stampIndexes.forEach { stampIndex ->
+            stamps[stampIndex].forEachIndexed { index, str ->
+                if (lines[index].isEmpty()) {
+                    lines[index] = str
+                } else {
+                    lines[index] = lines[index] + str
+                }
+            }
+        }
+
+        lines.forEach { println(it) }
+    }
 }
 
 
