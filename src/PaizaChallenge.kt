@@ -1,32 +1,35 @@
 fun main(args: Array<String>) {
-    val (h, w, n) = readln().split(" ").map { it.toInt() }
+    val (h, w) = readln().split(" ").map { it.toInt() }
+    val picture = Array(h) { CharArray(w) }
 
-    val stamps: MutableList<MutableList<String>> = mutableListOf()
-    for (i in 1..n) {
-        val stamp = mutableListOf<String>()
-        for (j in 1..h) {
-            stamp.add(readln())
-        }
-        stamps.add(stamp)
+    for (i in 0 until h) {
+        picture[i] = readln().toCharArray()
     }
 
-    val (r, c) = readln().split(" ").map { it.toInt() }
-    for(i in 1..r) {
-        val stampIndexes = readln().split(" ").map { it.toInt() - 1 }
-        val lines: Array<String> = Array(h) { "" }
-
-        stampIndexes.forEach { stampIndex ->
-            stamps[stampIndex].forEachIndexed { index, str ->
-                if (lines[index].isEmpty()) {
-                    lines[index] = str
-                } else {
-                    lines[index] = lines[index] + str
+    var result = 0
+    // １行目と最終行の'.'はドーナッツにならない。
+    // 2行目からh-1行目までを走査する。
+    for (i in 1 until h - 1) {
+        // 同じく、１列目と最終列の'.'はドーナッツにならない。
+        // 2列目からw-1列目までを走査する。
+        for(j in 1 until w - 1) {
+            if (picture[i][j] == '.') {
+                // '.'の周囲８マスが全て'#'であればドーナッツと判定する。
+                if (picture[i - 1][j - 1] == '#' &&
+                    picture[i - 1][j] == '#' &&
+                    picture[i - 1][j + 1] == '#' &&
+                    picture[i][j - 1] == '#' &&
+                    picture[i][j + 1] == '#' &&
+                    picture[i + 1][j - 1] == '#' &&
+                    picture[i + 1][j] == '#' &&
+                    picture[i + 1][j + 1] == '#')
+                {
+                    result++
                 }
             }
         }
-
-        lines.forEach { println(it) }
     }
+    println(result)
 }
 
 
